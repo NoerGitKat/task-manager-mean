@@ -10,6 +10,6 @@ import validateList from "../middlewares/validate.list";
 const listRouter = Router();
 
 listRouter.route("/").get(getAllLists).post(validateList, createList);
-listRouter.route("/:id").put(updateList).delete(deleteList);
+listRouter.route("/:id").put(validateList, updateList).delete(deleteList);
 
 export default listRouter;

@@ -3,7 +3,6 @@ import { validationResult } from "express-validator";
 import { List, Task } from "../models";
 
 const getAllLists = async (req: Request, res: Response) => {
-  // Get and send all lists
   try {
     const lists = await List.find();
     return res.status(200).json(lists);
@@ -13,12 +12,13 @@ const getAllLists = async (req: Request, res: Response) => {
 };
 
 const createList = async (req: Request, res: Response) => {
-  const { title } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json(errors);
   }
-  // Create new list
+
+  const { title } = req.body;
+
   const newList = new List({
     title,
   });
@@ -31,13 +31,30 @@ const createList = async (req: Request, res: Response) => {
 };
 
 const updateList = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json(errors);
+  }
+
   const { id } = req.params;
-  // Update list
+
+  try {
+    await List.findOneAndUpdate({ _id: id }, { $set: req.body });
+    return res.status(204).json({ msg: "List is updated!" });
+  } catch (error) {
+    return res.status(500).json({ msg: "Could not update list." });
+  }
 };
 
 const deleteList = async (req: Request, res: Response) => {
   const { id } = req.params;
-  // Update list
+
+  try {
+    await List.findOneAndDelete({ _id: id });
+    return res.status(204).json({ msg: "List has successfully been deleted!" });
+  } catch (error) {
+    return res.status(500).json({ msg: "Could not delete list." });
+  }
 };
 
 export { getAllLists, createList, updateList, deleteList };
