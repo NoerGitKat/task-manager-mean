@@ -4,6 +4,7 @@ const listSchema = new Schema({
   title: {
     type: String,
     required: true,
+    unique: true,
     minlength: 1,
     trim: true,
   },

@@ -1,20 +1,41 @@
-import { Request, Response } from "express";
+import { json, Request, Response } from "express";
+import { validationResult } from "express-validator";
+import { List, Task } from "../models";
 
-const getAllLists = (req: Request, res: Response) => {
+const getAllLists = async (req: Request, res: Response) => {
   // Get and send all lists
-  res.send("list is now found right? it is found!");
+  try {
+    const lists = await List.find();
+    return res.status(200).json(lists);
+  } catch (error) {
+    return res.status(404).json({ msg: "No lists found." });
+  }
 };
 
-const createList = (req: Request, res: Response) => {
+const createList = async (req: Request, res: Response) => {
+  const { title } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json(errors);
+  }
   // Create new list
+  const newList = new List({
+    title,
+  });
+  try {
+    await newList.save();
+    return res.status(201).json(newList);
+  } catch (error) {
+    return res.status(500).json({ msg: "Could not create list." });
+  }
 };
 
-const updateList = (req: Request, res: Response) => {
+const updateList = async (req: Request, res: Response) => {
   const { id } = req.params;
   // Update list
 };
 
-const deleteList = (req: Request, res: Response) => {
+const deleteList = async (req: Request, res: Response) => {
   const { id } = req.params;
   // Update list
 };

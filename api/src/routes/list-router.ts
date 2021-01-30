@@ -5,10 +5,11 @@ import {
   updateList,
   deleteList,
 } from "../controllers/lists-controller";
+import validateList from "../middlewares/validate.list";
 
 const listRouter = Router();
 
-listRouter.route("/").get(getAllLists).post(createList);
+listRouter.route("/").get(getAllLists).post(validateList, createList);
 listRouter.route("/:id").put(updateList).delete(deleteList);
 
 export default listRouter;
