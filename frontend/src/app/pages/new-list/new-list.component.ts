@@ -13,9 +13,8 @@ export class NewListComponent implements OnInit {
 
   createNewList(title: string) {
     this.taskService.createList(title).subscribe((response: any) => {
-      alert("list is created!");
       console.log("the response is...", response);
-      // Navigate to /lists/response._id
+      // TODO: Navigate to /lists/response._id
     });
   }
 }
