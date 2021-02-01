@@ -52,6 +52,7 @@
     padding: 42px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+    position: relative;
 
     .task {
       background-color: white;
@@ -73,6 +74,15 @@
         text-decoration: line-through;
         opacity: 30%;
       }
+    }
+
+    .circle-add-button {
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
     }
   }
 }
