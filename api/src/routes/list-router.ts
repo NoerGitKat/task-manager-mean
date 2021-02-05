@@ -9,6 +9,7 @@ import {
   updateTask,
   deleteTask,
 } from "../controllers/lists-controller";
+import validateCompletedTask from "../middlewares/validate.completed.task";
 import validateList from "../middlewares/validate.list";
 import validateTask from "../middlewares/validate.task";
 
@@ -22,7 +23,7 @@ listRouter
   .post(validateTask, createTask);
 listRouter
   .route("/:listId/tasks/:taskId")
-  .put(validateTask, updateTask)
+  .put(validateCompletedTask, updateTask)
   .delete(deleteTask);
 
 export default listRouter;

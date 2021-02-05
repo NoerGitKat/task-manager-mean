@@ -12,6 +12,10 @@ const taskSchema = new Schema({
     ref: "List",
     required: true,
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Task = model("Task", taskSchema);
